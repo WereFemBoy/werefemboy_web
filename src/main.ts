@@ -1,5 +1,5 @@
 import './assets/main.css'
-import 'primevue/resources/themes/lara-light-blue/theme.css'
+import 'primevue/resources/themes/md-light-deeppurple/theme.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 

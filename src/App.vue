@@ -1,14 +1,15 @@
 <script lang="ts">
 import Button from "primevue/button";
+import SideBar from "./components/Home/SideBar.vue";
+import { RouterView } from "vue-router";
 
 export default {
   data() {
-    return {
-
-    };
+    return {};
   },
   components: {
-    Button
+    Button,
+    SideBar,
   },
 };
 </script>
@@ -17,10 +18,10 @@ export default {
   <div class="container">
     <div class="content-division">
       <div class="slide-division">
-        
+        <SideBar />
       </div>
       <div class="page-division">
-        <img src="./assets/logo/logo.png" />
+        <RouterView />
       </div>
     </div>
   </div>
@@ -31,24 +32,24 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
 }
 
 .content-division {
   height: 100vh;
-  background-color: blueviolet;
+  /* background-color: blueviolet; */
   display: flex;
   flex-direction: row;
 }
 
 .slide-division {
   width: 20vw;
-  background-color: rgba(222, 184, 135, 0.45);
+  background-color: #f1f1f1;
 }
 
 .page-division {
   width: 80vw;
-  background-color: rgba(216, 111, 146, 0.45);
+  /* background-color: rgba(216, 111, 146, 0.45); */
 }
 
 .page-division img {
