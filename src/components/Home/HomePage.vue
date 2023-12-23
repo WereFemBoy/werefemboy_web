@@ -1,24 +1,52 @@
 <script lang="ts">
 import axios from "axios";
 
-type ServerStatus = {};
-
-type Room = {
-  
+type ServerStatus = {
+  "Server Time UTC": Date;
+  "Server Local Time": Date;
+  OS: String;
+  "Python Version": String;
 };
+
+type Room = {};
 type RoomList = Room[];
 
 export default {
   data() {
     return {
-      RoomList: [] as RoomList
-    };
+      ServerStatus: {} as ServerStatus,
+      RoomList: [] as RoomList,
+      socket: null as WebSocket | null,
+      message: '' as string,
+      message_send: '' as string,
+      room_list: [] as RoomList
+    }
   },
   methods: {
-    async GetRoomList() {
-      const response = await axios.get<RoomList>("/api/");
-      this.RoomList = response.data;
+    setUpWebSocket(){
+      this.socket = new WebSocket('ws://127.0.0.1:8000/api/games/connect')
+      this.socket.onmessage = (event: MessageEvent) => {
+        // this.message = event.data
+        this.room_list =  JSON.parse(event.data) as RoomList
+      }
+      this.socket.onopen = (event: Event) => {
+        console.log("Connection established.")
+        console.log(event)
+      }
+      this.socket.onerror = (error: Event) => {
+        console.log(error)
+      }
+      this.socket.onclose = (event: CloseEvent) => {
+        console.log("Disconnected.")
+        console.log(event)
+      }
     },
+    sendConnect(){
+      this.socket?.send(JSON.stringify('Room'))
+    }
+  },
+  mounted() {
+    this.setUpWebSocket()
   },
 };
 </script>
@@ -28,6 +56,13 @@ export default {
     <p class="home-page-top-text title-text">
       A web game like werewolf, but nsfw.
     </p>
+    <p class="home-page-top-text title-text">
+      {{ message }}
+    </p>
+    <p v-for="room in room_list">
+      {{ room }}
+    </p>
+    <button @click="sendConnect">Add Rooms</button>
   </div>
 </template>
 

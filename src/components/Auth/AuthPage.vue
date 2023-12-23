@@ -1,5 +1,14 @@
 <script lang="ts">
-export default {};
+export default {
+  data(){
+    return {
+      
+    }
+  },
+  methods: {
+
+  }
+};
 </script>
 
 <template>
